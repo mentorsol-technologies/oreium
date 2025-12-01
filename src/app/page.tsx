@@ -1,5 +1,11 @@
 "use client"
+import { useState } from "react";
 import { LineChart, Line, XAxis, ResponsiveContainer, Tooltip, TooltipProps } from "recharts";
+import dynamic from "next/dynamic";
+
+const GoldLocationMap = dynamic(() => import("@/components/GoldLocationMap"), {
+  ssr: false,
+});
 
 const chartData = [
   { month: "Jan", value: 8500 },
@@ -15,6 +21,8 @@ const chartData = [
 ];
 
 export default function Dashboard() {
+  const [showGoldLocation, setShowGoldLocation] = useState(false);
+
   return (
     <div className="p-4 sm:p-6 lg:p-[46px] max-w-[1484px] mx-auto w-full">
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 sm:gap-6 mb-4 sm:mb-6">
@@ -63,7 +71,7 @@ export default function Dashboard() {
         </div>
       </div>
 
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 sm:gap-6">
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 sm:gap-6 auto-rows-fr">
         <div className="rounded-[20px] border border-[#2B2B2B] bg-[#202020] p-4 sm:p-6 lg:p-[37px]">
           <h2 className="text-white font-['Poppins'] text-lg sm:text-xl font-bold mb-1">Analytics</h2>
           <p className="text-[#717579] font-['Poppins'] text-xs mb-4 sm:mb-8">
@@ -126,36 +134,30 @@ export default function Dashboard() {
             </ResponsiveContainer>
           </div>
         </div>
+        <div className="rounded-[20px] border border-[#2B2B2B] bg-[#202020] relative overflow-hidden h-full">
+          <div className="relative h-full min-h-[400px]">
+            <div className="absolute inset-0">
+              <GoldLocationMap center={[40.7128, -74.0060]} zoom={13} showMarker={showGoldLocation} />
+            </div>
 
-        <div className="rounded-[20px] border border-[#2B2B2B] bg-[#202020] p-4 sm:p-6 lg:p-[37px] relative overflow-hidden">
-          <h2 className="text-white font-['Poppins'] text-lg sm:text-xl font-bold mb-4 sm:mb-6">
-            My Gold Location
-          </h2>
+            <div className="absolute inset-0 pointer-events-none flex flex-col">
+              <div className="p-4 sm:p-6 lg:p-[37px]">
+                <h2 className="text-white font-['Poppins'] text-lg sm:text-xl font-bold drop-shadow-lg">
+                  My Gold Location
+                </h2>
+              </div>
 
-          <div className="relative h-[250px] sm:h-[346px] mb-4 sm:mb-6">
-            <img
-              src="https://api.builder.io/api/v1/image/assets/TEMP/feb2f031722e39d2d675d3ee529fdafd30f422ea?width=1530"
-              alt="Map"
-              className="absolute inset-0 w-full h-full object-cover opacity-75"
-            />
-            <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2">
-              <svg width="95" height="96" viewBox="0 0 95 96" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <circle cx="47.4027" cy="47.4026" r="12.6407" fill="#F6BB02" />
-                <circle cx="47.4026" cy="47.4026" r="47.4026" fill="url(#paint0_radial_16_559)" />
-                <circle cx="47.4027" cy="47.4026" r="15.0108" fill="#F6BB02" stroke="white" strokeWidth="4.74026" />
-                <defs>
-                  <radialGradient id="paint0_radial_16_559" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="translate(47.4026 47.4026) rotate(90) scale(47.4026)">
-                    <stop offset="0.447115" stopColor="#F6BB02" />
-                    <stop offset="1" stopColor="#FFEDA5" stopOpacity="0" />
-                  </radialGradient>
-                </defs>
-              </svg>
+              <div className="flex-1"></div>
+              <div className="p-4 sm:p-6 lg:p-[37px]">
+                <button
+                  onClick={() => setShowGoldLocation(!showGoldLocation)}
+                  className="w-full py-3 px-6 rounded-full bg-white text-[#0D0A04] font-['Plus_Jakarta_Sans'] text-sm sm:text-base font-medium hover:bg-white/90 transition-colors shadow-lg pointer-events-auto"
+                >
+                  {showGoldLocation ? "Hide my gold location" : "Show my gold location"}
+                </button>
+              </div>
             </div>
           </div>
-
-          <button className="w-full py-3 px-6 rounded-full bg-white text-[#0D0A04] font-['Plus_Jakarta_Sans'] text-sm sm:text-base font-medium hover:bg-white/90 transition-colors">
-            Show my gold location
-          </button>
         </div>
       </div>
     </div>

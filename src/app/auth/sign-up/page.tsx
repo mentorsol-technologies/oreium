@@ -2,6 +2,7 @@
 import Link from "next/link";
 import { useState } from "react";
 import PasswordField from "@/components/PasswordField";
+import { useRouter } from "next/navigation";
 
 export default function Signup() {
     const [name, setName] = useState("Perry Wilson");
@@ -9,10 +10,11 @@ export default function Signup() {
     const [password, setPassword] = useState("");
     const [confirmPassword, setConfirmPassword] = useState("");
     const [agreeToTerms, setAgreeToTerms] = useState(true);
-
+    const router = useRouter();
     const handleSignup = (e: React.FormEvent) => {
         e.preventDefault();
         console.log("Signup submitted");
+        router.push("/");
     };
 
     return (
