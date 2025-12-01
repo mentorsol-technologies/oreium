@@ -19,7 +19,6 @@ function getPageTitle(pathname: string): string {
         "/audit": "Audit",
         "/invite": "Invite",
         "/user-management": "User Management",
-        "/settings": "Settings",
     };
 
     // Check exact match first
