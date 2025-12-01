@@ -151,8 +151,8 @@ export function Sidebar({ isOpen, onClose }: SidebarProps) {
                             >
                                 <div className={cn(
                                     "w-6 h-6 flex items-center justify-center transition-transform duration-200",
-                                    isActive(item.path) 
-                                        ? "scale-110" 
+                                    isActive(item.path)
+                                        ? "scale-110"
                                         : "group-hover:scale-110 group-hover:text-white"
                                 )}>
                                     {item.icon}

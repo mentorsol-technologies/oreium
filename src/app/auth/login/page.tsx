@@ -2,14 +2,16 @@
 import { useState } from "react";
 import PasswordField from "@/components/PasswordField";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 
 export default function Index() {
     const [email, setEmail] = useState("perry.wilson@example.com");
     const [password, setPassword] = useState("•••••••••••");
     const [rememberMe, setRememberMe] = useState(true);
-
+    const router = useRouter();
     const handleLogin = (e: React.FormEvent) => {
         e.preventDefault();
+        router.push("/");
         console.log("Login submitted");
     };
 
