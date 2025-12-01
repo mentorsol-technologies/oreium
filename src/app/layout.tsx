@@ -14,8 +14,8 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Orium",
-  description: "Orium",
+  title: "Oreium",
+  description: "Oreium",
   icons: {
     icon: "/favicon.ico",
   },
