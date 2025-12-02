@@ -21,8 +21,8 @@ export function Tabs({ tabs, activeTab, onTabChange, className = "" }: TabsProps
                     key={tab.id}
                     onClick={() => onTabChange(tab.id)}
                     className={`flex-1 py-2.5 px-4 text-center font-['Plus_Jakarta_Sans'] text-base font-medium transition-colors ${activeTab === tab.id
-                            ? "bg-[#BB984C] text-black"
-                            : "bg-[#202020] text-white"
+                        ? "bg-primary text-white"
+                        : "bg-[#202020] text-white"
                         }`}
                 >
                     {tab.label}

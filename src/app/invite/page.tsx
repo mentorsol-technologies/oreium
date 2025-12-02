@@ -25,10 +25,8 @@ export default function Invite() {
     const [activeTab, setActiveTab] = useState<"circle" | "history">("circle");
     const referralLink = "https://oreium.vault/ref/ORE-Perry";
 
-    // Calculate progress (example: need 3 more verified members)
     const verifiedCount = invitedMembers.filter(m => m.status === "verified").length;
     const membersNeeded = 3;
-    // Progress: if we need 3 more, total target is current + 3
     const totalTarget = verifiedCount + membersNeeded;
     const progress = totalTarget > 0 ? (verifiedCount / totalTarget) * 100 : 0;
 
@@ -57,10 +55,9 @@ export default function Invite() {
     ];
 
     return (
-        <div className="p-4 sm:p-6 lg:p-[46px] max-w-[1484px] mx-auto w-full">
+        <div className="flex-1 p-4 lg:p-8 overflow-auto">
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 sm:gap-6 mb-6 sm:mb-8">
-                {/* Invite To The Circle Card */}
-                <Card padding="lg">
+                <Card padding="md">
                     <h2 className="text-white font-['Poppins'] text-xl font-semibold mb-6">
                         Invite To The Circle
                     </h2>
@@ -68,27 +65,27 @@ export default function Invite() {
                         <div className="text-white font-['Poppins'] text-4xl sm:text-5xl font-bold mb-2">
                             0.0000
                         </div>
-                        <p className="text-[#717579] font-['Poppins'] text-sm">
+
+                        <p className="text-primary font-['Poppins'] text-sm">
                             Your ORE Credits
                         </p>
                     </div>
                 </Card>
 
-                {/* Next Milestone Card */}
-                <Card padding="lg">
+                <Card padding="md">
                     <h2 className="text-white font-['Poppins'] text-xl font-semibold mb-6">
                         Next Milestone
                     </h2>
                     <div className="space-y-4">
                         <ProgressBar value={progress} />
-                        <p className="text-white font-['Poppins'] text-sm">
-                            Invite <strong className="text-[#BB984C]">3 more</strong> verified members to earn <strong className="text-[#BB984C]">+0.1000 ORE</strong>
+                        <p className="text-muted-foreground font-['Poppins'] text-sm">
+                            Invite <strong className="text-primary">3 more</strong> verified members to earn <strong >+0.1000 ORE</strong>
                         </p>
                         <div>
-                            <label className="text-[#717579] font-['Poppins'] text-sm mb-2 block">
+                            <label className="text-muted-foreground font-['Poppins'] text-sm mb-2 block">
                                 Your Referral Link
                             </label>
-                            <div className="flex items-center gap-2 bg-[#161717] rounded-[10px] p-3 border border-white/10">
+                            <div className="flex items-center gap-2 bg-muted rounded-[10px] p-3 border border-white/10">
                                 <input
                                     type="text"
                                     value={referralLink}
@@ -102,22 +99,21 @@ export default function Invite() {
                 </Card>
             </div>
 
-            {/* How Gold Credits Work Card */}
-            <Card padding="lg" className="mb-6 sm:mb-8">
+            <Card padding="md" className="mb-6 sm:mb-8">
                 <h2 className="text-white font-['Poppins'] text-xl font-semibold mb-6">
                     How Gold Credits Work
                 </h2>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                     <div>
-                        <h3 className="text-white font-['Poppins'] text-base font-semibold mb-4">
+                        <h3 className="text-primary font-['Poppins'] text-base font-semibold mb-4">
                             Tiered Reward Structure
                         </h3>
-                        <ul className="space-y-3 text-[#717579] font-['Poppins'] text-sm">
+                        <ul className="space-y-1 text-muted-foreground font-['Poppins'] text-sm list-disc ml-6">
                             <li>
-                                First <strong className="text-white">1.0000g</strong> of purchases: Earn <strong className="text-[#BB984C]">0.001g</strong> per gram purchased by your invitee (<strong className="text-[#BB984C]">0.1%</strong> reward)
+                                First <strong className="text-white">1.0000g</strong> of purchases: Earn <strong >0.001g</strong> per gram purchased by your invitee (<strong >0.1%</strong> reward)
                             </li>
                             <li>
-                                Beyond <strong className="text-white">1.0000g</strong>: Earn <strong className="text-[#BB984C]">0.0001g</strong> per gram purchased by your invitee (<strong className="text-[#BB984C]">0.01%</strong> reward)
+                                Beyond <strong className="text-white">1.0000g</strong>: Earn <strong >0.0001g</strong> per gram purchased by your invitee (<strong>0.01%</strong> reward)
                             </li>
                         </ul>
                     </div>
@@ -125,7 +121,7 @@ export default function Invite() {
                         <h3 className="text-white font-['Poppins'] text-base font-semibold mb-4">
                             Important Terms
                         </h3>
-                        <ul className="space-y-3 text-[#717579] font-['Poppins'] text-sm">
+                        <ul className="space-y-1 text-muted-foreground font-['Poppins'] text-sm list-disc ml-6">
                             <li>Rewards credited only when invitee purchases settle</li>
                             <li>Credits auto-apply to your purchases (toggle available)</li>
                             <li>14-day clawback period if invitee sells early</li>
@@ -135,7 +131,6 @@ export default function Invite() {
                 </div>
             </Card>
 
-            {/* Your Circle / Rewards History Section */}
             <div className="mb-6">
                 <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-4">
                     <Tabs
@@ -145,9 +140,9 @@ export default function Invite() {
                         ]}
                         activeTab={activeTab}
                         onTabChange={(tabId) => setActiveTab(tabId as "circle" | "history")}
-                        className="w-full sm:w-auto"
+                        className="w-full sm:w-[350px]"
                     />
-                    <div className="flex items-center gap-2 text-[#717579] font-['Poppins'] text-sm">
+                    <div className="flex items-center gap-2 text-primary font-['Poppins'] text-sm cursor-pointer ">
                         <Info className="w-4 h-4" />
                         <span>About ORE Credits</span>
                     </div>
