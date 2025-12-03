@@ -9,10 +9,6 @@ const GoldLocationMap = dynamic(() => import("@/components/GoldLocationMap"), {
   ssr: false,
 });
 
-const UserLocationsMap = dynamic(() => import("@/components/UserLocationsMap"), {
-  ssr: false,
-});
-
 const chartData = [
   { month: "Jan", value: 8500 },
   { month: "Feb", value: 9200 },
@@ -182,14 +178,13 @@ export default function Dashboard() {
           </div>
         </div>
       </div>
-
       <Modal
         isOpen={showLocationsModal}
         onClose={() => setShowLocationsModal(false)}
         title="Your Gold Storage Partners"
         subtitle="Your gold is securely vaulted with our trusted institutional partners."
       >
-        <div className="space-y-8">
+        <div className="space-y-6">
           <div>
             <h3 className="text-white font-['Poppins'] text-lg font-bold mb-2">
               The Wyoming Reserve
@@ -198,9 +193,8 @@ export default function Dashboard() {
               Your gold is securely stored in institutional-grade vaults operated by The Wyoming Reserve, providing bank-level security and full segregation of assets.
             </p>
             <div className="mb-4">
-              <UserLocationsMap locations={userLocations} />
+              <GoldLocationMap locations={userLocations} height="h-[200px]" />
             </div>
-
             <a
               href="https://www.scottsdalemint.com"
               target="_blank"
