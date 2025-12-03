@@ -2,6 +2,7 @@
 import { useState } from "react";
 import { LineChart, Line, XAxis, ResponsiveContainer, Tooltip, TooltipProps } from "recharts";
 import dynamic from "next/dynamic";
+import { useRouter } from "next/navigation";
 
 const GoldLocationMap = dynamic(() => import("@/components/GoldLocationMap"), {
   ssr: false,
@@ -22,7 +23,7 @@ const chartData = [
 
 export default function Dashboard() {
   const [showGoldLocation, setShowGoldLocation] = useState(false);
-
+  const router = useRouter();
   return (
     <div className="p-4 sm:p-6 lg:p-[46px] max-w-[1484px] mx-auto w-full">
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 sm:gap-6 mb-4 sm:mb-6">
@@ -40,7 +41,7 @@ export default function Dashboard() {
                 <span className="text-lg sm:text-[22px]"> g</span>
               </p>
             </div>
-            <button className="w-fit px-4 sm:px-6 py-1.5 rounded-full bg-white text-[#0D0A04] font-['Plus_Jakarta_Sans'] text-sm font-medium hover:bg-white/90 transition-colors">
+            <button onClick={() => router.push("/transact")} className="w-fit px-4 sm:px-6 py-1.5 rounded-full bg-white text-[#0D0A04] font-['Plus_Jakarta_Sans'] text-sm font-medium hover:bg-white/90 transition-colors">
               Buy Gold
             </button>
           </div>
@@ -64,7 +65,7 @@ export default function Dashboard() {
               </p>
 
             </div>
-            <button className="w-fit px-4 sm:px-6 py-1.5 rounded-full bg-white text-[#0D0A04] font-['Plus_Jakarta_Sans'] text-sm font-medium hover:bg-white/90 transition-colors">
+            <button onClick={() => router.push("/invite")} className="w-fit px-4 sm:px-6 py-1.5 rounded-full bg-white text-[#0D0A04] font-['Plus_Jakarta_Sans'] text-sm font-medium hover:bg-white/90 transition-colors">
               Invite & Earn
             </button>
           </div>
