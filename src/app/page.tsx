@@ -1,10 +1,15 @@
 "use client"
-import { useState } from "react";
+import { useState, useMemo } from "react";
 import { LineChart, Line, XAxis, ResponsiveContainer, Tooltip, TooltipProps } from "recharts";
 import dynamic from "next/dynamic";
 import { useRouter } from "next/navigation";
+import { Modal } from "@/components/Modal";
 
 const GoldLocationMap = dynamic(() => import("@/components/GoldLocationMap"), {
+  ssr: false,
+});
+
+const UserLocationsMap = dynamic(() => import("@/components/UserLocationsMap"), {
   ssr: false,
 });
 
@@ -21,9 +26,25 @@ const chartData = [
   { month: "Nov", value: 10200 },
 ];
 
+function generateRandomLocations(count: number = 5) {
+  const baseLat = 41.1455;
+  const baseLng = -104.8020;
+  const radius = 0.5;
+
+  return Array.from({ length: count }, (_, i) => ({
+    id: `user-${i + 1}`,
+    lat: baseLat + (Math.random() - 0.5) * radius,
+    lng: baseLng + (Math.random() - 0.5) * radius,
+    name: `User ${i + 1}`,
+  }));
+}
+
 export default function Dashboard() {
   const [showGoldLocation, setShowGoldLocation] = useState(false);
+  const [showLocationsModal, setShowLocationsModal] = useState(false);
   const router = useRouter();
+
+  const userLocations = useMemo(() => generateRandomLocations(5), []);
   return (
     <div className="p-4 sm:p-6 lg:p-[46px] max-w-[1484px] mx-auto w-full">
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 sm:gap-6 mb-4 sm:mb-6">
@@ -151,16 +172,77 @@ export default function Dashboard() {
               <div className="flex-1"></div>
               <div className="p-4 sm:p-6 lg:p-[37px]">
                 <button
-                  onClick={() => setShowGoldLocation(!showGoldLocation)}
+                  onClick={() => setShowLocationsModal(true)}
                   className="w-full py-3 px-6 rounded-full bg-white text-[#0D0A04] font-['Plus_Jakarta_Sans'] text-sm sm:text-base font-medium hover:bg-white/90 transition-colors shadow-lg pointer-events-auto"
                 >
-                  {showGoldLocation ? "Hide my gold location" : "Show my gold location"}
+                  Show my gold location
                 </button>
               </div>
             </div>
           </div>
         </div>
       </div>
+
+      <Modal
+        isOpen={showLocationsModal}
+        onClose={() => setShowLocationsModal(false)}
+        title="Your Gold Storage Partners"
+        subtitle="Your gold is securely vaulted with our trusted institutional partners."
+      >
+        <div className="space-y-8">
+          <div>
+            <h3 className="text-white font-['Poppins'] text-lg font-bold mb-2">
+              The Wyoming Reserve
+            </h3>
+            <p className="font-['Poppins'] text-sm text-white/70 mb-4">
+              Your gold is securely stored in institutional-grade vaults operated by The Wyoming Reserve, providing bank-level security and full segregation of assets.
+            </p>
+            <div className="mb-4">
+              <UserLocationsMap locations={userLocations} />
+            </div>
+
+            <a
+              href="https://www.scottsdalemint.com"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-[#F6BB02] font-['Poppins'] text-sm hover:underline inline-flex items-center gap-1"
+            >
+              Visit Scottsdale Mint →
+            </a>
+          </div>
+          <div>
+            <h3 className="text-white font-['Poppins'] text-lg font-bold mb-1">
+              Scottsdale Mint
+            </h3>
+            <p className="font-['Poppins'] text-xs text-white/50 mb-2">
+              Gold Supplier
+            </p>
+            <p className="font-['Poppins'] text-sm text-white/70 mb-4">
+              We source our premium gold exclusively from Scottsdale Mint, one of the most respected precious metals refiners in North America, ensuring the highest quality standards.
+            </p>
+            <a
+              href="https://www.scottsdalemint.com"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-[#F6BB02] font-['Poppins'] text-sm hover:underline inline-flex items-center gap-1"
+            >
+              Visit Scottsdale Mint →
+            </a>
+          </div>
+
+          <div className="bg-muted rounded-[20px] p-4">
+            <h3 className="text-white font-['Poppins'] text-lg font-bold mb-1">
+              Security & Transparency
+            </h3>
+            <p className="font-['Poppins'] text-xs text-white/50 mb-2">
+              Gold Supplier
+            </p>
+            <p className="font-['Poppins'] text-sm text-white/70">
+              All gold held in the Oreium Vault is fully allocated, segregated, and insured. Regular third-party audits verify our holdings match client balances. Your gold remains your property at all times.
+            </p>
+          </div>
+        </div>
+      </Modal>
     </div>
   );
 }
